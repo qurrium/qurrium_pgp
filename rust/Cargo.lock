@@ -247,7 +247,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "shadow_trace"
+name = "shadow_trace_rust"
 version = "0.1.0"
 dependencies = [
  "indicatif",

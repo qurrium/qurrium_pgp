@@ -6,7 +6,7 @@ build-backend = "maturin"
 name = "qurrium_pgp"
 description = "Qurrium Crossroads for Predicting Properties of Quantum Many-Body Systems - A Format Transformation Toolkit"
 authors = [{ name = "Huai-Chung Chang", email = "harui2019@proton.me" }]
-license = { file = "LICENSE.txt" }
+license = { file = "LICENSE" }
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
