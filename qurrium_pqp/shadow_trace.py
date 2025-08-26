@@ -7,7 +7,7 @@ import multiprocessing as mp
 import tqdm
 
 # pylint:disable=no-name-in-module
-from qurrium_pgp.shadow_trace_rust import (
+from .shadow_trace_rust import (
     perform_trace_calculation as perform_trace_calculation_rust,
 )
 
@@ -33,9 +33,7 @@ def rho_elt_process(rho_a_i: str, rho_b_i: str, rho_a_i1: str, rho_b_i1: str) ->
     return 0.5 if rho_a_i != rho_b_i else (5 if rho_a_i1 == rho_b_i1 else -4)
 
 
-def get_trace(
-    rho_a: Sequence[str], rho_b: Sequence[str], substring_index: list[int]
-) -> float:
+def get_trace(rho_a: Sequence[str], rho_b: Sequence[str], substring_index: list[int]) -> float:
     """Calculate the trace of two classical shadows.
 
     .. code-block:: python
@@ -60,10 +58,7 @@ def get_trace(
 
     return reduce(
         lambda x, y: x * y,
-        [
-            rho_elt_process(rho_a[i], rho_b[i], rho_a[i + 1], rho_b[i + 1])
-            for i in substring_index
-        ],
+        [rho_elt_process(rho_a[i], rho_b[i], rho_a[i + 1], rho_b[i + 1]) for i in substring_index],
     )
 
 
@@ -87,10 +82,7 @@ def trace_calculation_unit(
     """
     substring_index = [2 * i for i in subs_inner]
 
-    return sum(
-        get_trace(data_tmp[m1], data_tmp[m2], substring_index)
-        for m1, m2 in list_of_pairs
-    )
+    return sum(get_trace(data_tmp[m1], data_tmp[m2], substring_index) for m1, m2 in list_of_pairs)
 
 
 def batch_make(num_of_samples: int):
@@ -152,17 +144,12 @@ def perform_trace_calculation_py(
         # Using multiprocessing to parallelize the trace calculation
         results = pool.imap_unordered(
             trace_calculation_unit_wrapper,
-            (
-                (data, subs, sub_combination)
-                for sub_combination in all_combinations_split
-            ),
+            ((data, subs, sub_combination) for sub_combination in all_combinations_split),
             chunksize=max(1, chunksize),
         )
         print("Calculating traces for all pairs of classical shadows...")
         trace_m1_m2 += sum(
-            tqdm.tqdm(
-                results, total=all_combinations_split_num, desc="Calculating traces"
-            )
+            tqdm.tqdm(results, total=all_combinations_split_num, desc="Calculating traces")
         )
 
     return trace_m1_m2
@@ -185,7 +172,6 @@ def perform_trace_calculation(
     """
     if backend == "Python":
         return perform_trace_calculation_py(data, subs)
-    elif backend == "Rust":
+    if backend == "Rust":
         return perform_trace_calculation_rust(data, subs)
-    else:
-        raise ValueError(f"Unknown backend: {backend}")
+    raise ValueError(f"Unknown backend: {backend}")

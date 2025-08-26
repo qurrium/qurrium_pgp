@@ -29,7 +29,6 @@ fn get_trace(rho_a: &Vec<String>, rho_b: &Vec<String>, substring_index: &Vec<usi
     })
 }
 
-
 #[pyfunction]
 fn perform_trace_calculation(data: Vec<Vec<String>>, subs: Vec<usize>) -> f64 {
     let num_samples = data.len();

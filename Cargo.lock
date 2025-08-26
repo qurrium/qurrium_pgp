@@ -227,6 +227,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "qurrium_pqp"
+version = "0.1.0"
+dependencies = [
+ "indicatif",
+ "pyo3",
+ "rayon",
+]
+
+[[package]]
 name = "rayon"
 version = "1.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -244,15 +253,6 @@ checksum = "22e18b0f0062d30d4230b2e85ff77fdfe4326feb054b9783a3460d8435c8ab91"
 dependencies = [
  "crossbeam-deque",
  "crossbeam-utils",
-]
-
-[[package]]
-name = "shadow_trace_rust"
-version = "0.1.0"
-dependencies = [
- "indicatif",
- "pyo3",
- "rayon",
 ]
 
 [[package]]
