@@ -61,7 +61,7 @@ fn perform_trace_calculation(data: Vec<Vec<String>>, subs: Vec<usize>) -> f64 {
 
 /// A Python module implemented in Rust.
 #[pymodule]
-fn shadow_trace_rust(m: &Bound<'_, PyModule>) -> PyResult<()> {
+fn dismatmul_rust(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(perform_trace_calculation, m)?)?;
     Ok(())
 }

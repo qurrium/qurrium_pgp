@@ -1,4 +1,4 @@
-"""Shadow Trace Calculation by Python. (:mod:`qurrium_pgp.shadow_trace`)"""
+"""Shadow Trace Calculation by Python. (:mod:`qurrium_pgp.dismatmul`)"""
 
 from typing import Sequence, Iterable, Literal
 from functools import reduce
@@ -7,7 +7,7 @@ import multiprocessing as mp
 import tqdm
 
 # pylint:disable=no-name-in-module
-from .shadow_trace_rust import (
+from .dismatmul_rust import (
     perform_trace_calculation as perform_trace_calculation_rust,
 )
 
@@ -175,3 +175,27 @@ def perform_trace_calculation(
     if backend == "Rust":
         return perform_trace_calculation_rust(data, subs)
     raise ValueError(f"Unknown backend: {backend}")
+
+
+def calculate_purity(
+    data: Sequence[Sequence[str]],
+    subs: Sequence[int],
+    backend: Literal["Python", "Rust"] = "Rust",
+) -> float:
+    """Calculate the purity of the quantum state from the measurement data.
+
+    Args:
+        data (Sequence[Sequence[str]]): The measurement data.
+        subs (Sequence[int]): The subset of qubits to consider for the purity calculation.
+        backend (Literal["Python", "Rust"]): The backend to use for the calculation.
+
+    Returns:
+        float: The calculated purity of the quantum state.
+    """
+    num_of_samples = len(data)
+    if num_of_samples < 2:
+        raise ValueError("At least two samples are required to calculate purity.")
+    trace_m1_m2 = perform_trace_calculation(data, subs, backend)
+    purity = 2 * trace_m1_m2 / (num_of_samples * (num_of_samples - 1))
+
+    return purity

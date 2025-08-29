@@ -19,7 +19,7 @@ dynamic = ["version"]
 
 [tool.maturin]
 features = ["pyo3/extension-module"]
-module-name = "qurrium_pqp.shadow_trace_rust"
+module-name = "qurrium_pqp.dismatmul_rust"
 
 [tool.black]
 line-length = 100

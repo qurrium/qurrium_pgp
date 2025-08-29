@@ -1,4 +1,4 @@
-"""Shadow Trace Calculation by Rust. (:mod:`qurrium_pgp.shadow_trace_rust`)
+"""Shadow Trace Calculation by Rust. (:mod:`qurrium_pgp.dismatmul_rust`)
 
 This file is type information for the Rust implementation of shadow trace calculations.
 """
